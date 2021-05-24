@@ -1,2 +1,3 @@
 # WeatherMenu
-Menu bar app for MacOS
+
+Simple Menu bar app for MacOS

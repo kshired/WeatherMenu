@@ -1,0 +1,58 @@
+{
+  "name": "weather_menubar",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/cli": "^7.14.3",
+    "@babel/core": "^7.14.3",
+    "@babel/node": "^7.14.2",
+    "@babel/preset-env": "^7.14.2",
+    "@babel/register": "^7.13.16",
+    "@babel/runtime": "^7.14.0",
+    "axios": "^0.21.1",
+    "dotenv": "^10.0.0",
+    "electron-get-location": "^1.0.1",
+    "electron-util": "^0.16.0",
+    "geoip-lite": "^1.4.2",
+    "ip": "^1.1.5",
+    "public-ip": "^4.0.3"
+  },
+  "scripts": {
+    "start": "electron -r @babel/register .",
+    "build:osx": "electron-builder --mac"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.14.3",
+    "electron": "^12.0.9",
+    "electron-builder": "^22.10.5",
+    "nodemon": "^2.0.7"
+  },
+  "build": {
+    "productName": "WeatherMenu",
+    "appId": "com.kshired.weather",
+    "extraResources": [
+      {
+        "from": "./resources",
+        "to": "resources",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "protocols": {
+      "name": "weatherMenu",
+      "schemes": [
+        "weatherMenu"
+      ]
+    },
+    "mac": {
+      "target": [
+        "default"
+      ]
+    },
+    "dmg": {
+      "title": "WeatherMenu"
+    }
+  }
+}
