@@ -1,7 +1,7 @@
 require('dotenv').config();
 const path = require('path');
-const axios = require('axios');
 const { app, Menu, Tray } = require('electron');
+const axios = require('axios');
 const publicIp = require('public-ip');
 const geoip = require('geoip-lite');
 
