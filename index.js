@@ -63,4 +63,5 @@ app
     changeIcon();
   });
 
+// fetch weather and change icon every 10 min
 setInterval(changeIcon, 600000);
