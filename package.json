@@ -46,7 +46,8 @@
     "mac": {
       "target": [
         "default"
-      ]
+      ],
+      "icon": "build/icons/icon.icns"
     },
     "dmg": {
       "title": "WeatherMenu"
