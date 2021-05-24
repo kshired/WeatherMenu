@@ -4,6 +4,8 @@ Simple Menu bar app for MacOS
 
 This app shows current weather by icon. That's it!
 
+![screenshot](./files/screenshot.png)
+
 ## Dependencies
 
 - electron
