@@ -18,6 +18,7 @@ const defaultDir =
 
 const defaultImg = 'loading.png';
 
+// fetching weather data
 const fetchWeather = async (lat, lon) => {
   const res = await axios.get(API_URL, {
     params: {
@@ -30,9 +31,9 @@ const fetchWeather = async (lat, lon) => {
   return res.data.weather[0].icon;
 };
 
+// get a icon name by weather api, then change icon
 const changeIcon = async () => {
   const icon = await fetchWeather(geo.ll[0], geo.ll[1]);
-  console.log(icon);
   tray.setImage(defaultDir + icon + '.png');
 };
 
@@ -41,6 +42,7 @@ app.dock.hide();
 app
   .whenReady()
   .then(() => {
+    // initialize tray
     tray = new Tray(path.join(defaultDir, defaultImg));
     const myMenu = Menu.buildFromTemplate([
       {
@@ -51,15 +53,18 @@ app
         },
       },
     ]);
+    tray.setToolTip('WeatherMenu');
     tray.setContextMenu(myMenu);
   })
   .then(async () => {
+    // get a current location by public ip
     ip = await publicIp.v4();
     console.log(ip);
     geo = geoip.lookup(ip);
     console.log(geo.ll);
   })
   .then(() => {
+    // intialize icon
     changeIcon();
   });
 
