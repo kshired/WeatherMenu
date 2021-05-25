@@ -1,8 +1,9 @@
 {
   "name": "weather_menubar",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "main": "index.js",
   "license": "MIT",
+  "author": "kshired",
   "dependencies": {
     "@babel/cli": "^7.14.3",
     "@babel/core": "^7.14.3",
