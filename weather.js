@@ -1,6 +1,6 @@
 require('dotenv').config();
 const axios = require('axios');
-const { Menu } = require('electron');
+const { app, Menu } = require('electron');
 
 let myMenu = null;
 
