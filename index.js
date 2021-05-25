@@ -7,7 +7,9 @@ const geoip = require('geoip-lite');
 
 let ip = null;
 let tray = null;
-let geo = null;
+let myMenu = null;
+let lat = null;
+let lon = null;
 
 const API_URL = 'https://api.openweathermap.org/data/2.5/weather';
 
@@ -28,13 +30,40 @@ const fetchWeather = async (lat, lon) => {
       lon,
     },
   });
-  return res.data.weather[0].icon;
+
+  let { icon, description } = res.data.weather[0];
+  description =
+    description[0].toUpperCase() + description.substring(1, description.length);
+
+  return {
+    icon,
+    description,
+  };
 };
 
-// get a icon name by weather api, then change icon
-const changeIcon = async () => {
-  const icon = await fetchWeather(geo.ll[0], geo.ll[1]);
+// get a icon name by weather api, then change icon and menu
+const changeWeather = async () => {
+  const { icon, description } = await fetchWeather(lat, lon);
+
+  myMenu = Menu.buildFromTemplate([
+    {
+      label: description,
+      type: 'normal',
+    },
+    {
+      type: 'separator',
+    },
+    {
+      label: 'Quit',
+      type: 'normal',
+      click: () => {
+        app.quit();
+      },
+    },
+  ]);
+
   tray.setImage(defaultDir + icon + '.png');
+  tray.setContextMenu(myMenu);
 };
 
 app.dock.hide();
@@ -44,29 +73,19 @@ app
   .then(() => {
     // initialize tray
     tray = new Tray(path.join(defaultDir, defaultImg));
-    const myMenu = Menu.buildFromTemplate([
-      {
-        label: 'quit',
-        type: 'normal',
-        click: () => {
-          app.quit();
-        },
-      },
-    ]);
     tray.setToolTip('WeatherMenu');
-    tray.setContextMenu(myMenu);
   })
   .then(async () => {
     // get a current location by public ip
     ip = await publicIp.v4();
-    console.log(ip);
-    geo = geoip.lookup(ip);
-    console.log(geo.ll);
+    const geo = geoip.lookup(ip);
+    lat = geo.ll[0];
+    lon = geo.ll[1];
   })
   .then(() => {
     // intialize icon
-    changeIcon();
+    changeWeather();
   });
 
 // fetch weather and change icon every 10 min
-setInterval(changeIcon, 600000);
+setInterval(changeWeather, 600000);
