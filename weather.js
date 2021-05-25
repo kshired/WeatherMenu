@@ -1,6 +1,6 @@
 require('dotenv').config();
 const axios = require('axios');
-const { app, Menu } = require('electron');
+const { app, Menu, nativeImage } = require('electron');
 
 let myMenu = null;
 
@@ -45,8 +45,11 @@ const changeWeather = async (tray, lat, lon, dir) => {
       },
     },
   ]);
+  const img = nativeImage
+    .createFromPath(dir + icon + '.png')
+    .resize({ width: 32, height: 32 });
 
-  tray.setImage(dir + icon + '.png');
+  tray.setImage(img);
   tray.setContextMenu(myMenu);
 };
 

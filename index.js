@@ -1,6 +1,6 @@
 require('dotenv').config();
 const path = require('path');
-const { app, Tray } = require('electron');
+const { app, Tray, nativeImage } = require('electron');
 const publicIp = require('public-ip');
 const geoip = require('geoip-lite');
 const changeWeather = require('./weather');
@@ -21,7 +21,10 @@ app
   .whenReady()
   .then(() => {
     // initialize tray
-    tray = new Tray(path.join(resourcesDir, 'loading.png'));
+    const loading = nativeImage
+      .createFromPath(resourcesDir + 'loading.png')
+      .resize({ width: 32, height: 32 });
+    tray = new Tray(loading);
     tray.setToolTip('WeatherMenu');
   })
   .then(async () => {
