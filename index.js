@@ -1,11 +1,9 @@
 require('dotenv').config();
 const path = require('path');
 const { app, Tray, nativeImage } = require('electron');
-const publicIp = require('public-ip');
-const geoip = require('geoip-lite');
 const changeWeather = require('./weather');
+const wifiLocation = require('./wifi_location');
 
-let ip = null;
 let tray = null;
 let lat = null;
 let lon = null;
@@ -27,16 +25,13 @@ app
     tray = new Tray(loading);
     tray.setToolTip('WeatherMenu');
   })
-  .then(async () => {
-    // get a current location by public ip
-    ip = await publicIp.v4();
-    const geo = geoip.lookup(ip);
-    lat = geo.ll[0];
-    lon = geo.ll[1];
-  })
   .then(() => {
-    // intialize icon
-    changeWeather(tray, lat, lon, resourcesDir);
+    // get a current location and get weather
+    wifiLocation.location(function (err, val) {
+      lat = val.lat;
+      lon = val.lng;
+      changeWeather(tray, lat, lon, resourcesDir);
+    });
   });
 
 // fetch weather and change icon every 10 min
