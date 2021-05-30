@@ -12,6 +12,16 @@ This app shows current weather by icon. That's it!
 - axios
 - dotenv
 
+## Getting Started
+
+- .env file
+  ```
+  NODE_ENV = dev or production
+  API_URL = https://api.openweathermap.org/data/2.5/weather
+  API_KEY = openweathermap API key
+  GOOGLE_API_KEY = Google Geolocation API key
+  ```
+
 ## License
 
 - Apache License Version 2.0
