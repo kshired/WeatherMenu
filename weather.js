@@ -13,7 +13,6 @@ const fetchWeather = async (lat, lon) => {
   const res = await axios.get(process.env.API_URL, {
     params: {
       appid: process.env.API_KEY,
-      units: 'metric',
       lat,
       lon,
     },
